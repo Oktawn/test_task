@@ -9,6 +9,6 @@ export class PollsEntity {
   @Column({ unique: true })
   title: string;
 
-  @OneToMany(() => AnswerEntity, (answer) => answer.poll)
+  @OneToMany(() => AnswerEntity, (answer) => answer.poll, { onDelete: 'CASCADE' })
   answers: AnswerEntity[]
 }

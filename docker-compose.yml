@@ -2,7 +2,7 @@ services:
   api_db:
     image: postgres
     env_file:
-      - ./api/.env
+      - .env
     restart: always
     environment:
       POSTGRES_USER: ${DB_USER}
@@ -16,7 +16,7 @@ services:
     build:
       context: ./api/
     env_file:
-      - ./api/.env
+      - .env
     depends_on:
       - api_db
     ports:

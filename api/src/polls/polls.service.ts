@@ -45,7 +45,7 @@ export class PollsService {
     const poll = await this.pollsRep.findOne({ where: { id } });
     if (!poll)
       throw new BadRequestException('Poll not found');
-    await this.pollsRep.delete(poll);
+    await this.pollsRep.remove(poll);
   }
 
 }

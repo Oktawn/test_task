@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsArray, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class PollCreateDto {
 
@@ -6,8 +6,8 @@ export class PollCreateDto {
   @IsNotEmpty()
   title: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsArray()
+  @IsNotEmpty({ each: true })
   answer: string[];
 }
 

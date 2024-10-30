@@ -13,7 +13,7 @@ export class AnswerEntity {
   @Column()
   ans_count: number;
 
-  @ManyToOne(() => PollsEntity, (poll) => poll.answers)
+  @ManyToOne(() => PollsEntity, (poll) => poll.answers, { onDelete: 'CASCADE' })
   poll: PollsEntity;
 
 }
