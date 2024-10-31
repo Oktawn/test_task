@@ -22,9 +22,9 @@ services:
     ports:
       - "${API_PORT}:${API_PORT}"
 
-  front:
-    container_name: poll-front
-    build:
-      context: ./front/
-    depends_on:
-      - api
+  # front:
+  #   container_name: poll-front
+  #   build:
+  #     context: ./front/
+  #   ports:
+  #     - "5173:5173"

@@ -34,7 +34,7 @@ export class PollsService {
   }
 
   async voteAnswer(body: VoteDto) {
-    const ans = await this.answerRep.findOne({ where: { id: body.idPoll } });
+    const ans = await this.answerRep.findOne({ where: { poll: { id: body.idPoll }, id: body.idAnswer } });
     if (!ans)
       throw new BadRequestException('Poll not found');
     ans.ans_count++;
