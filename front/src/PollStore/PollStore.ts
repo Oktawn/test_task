@@ -25,9 +25,9 @@ interface Card {
 }
 
 interface PollStore {
-  polls: Poll[] | null,
+  polls: Poll[] | [],
   completedPolls: compPolls[] | null,
-  card: Card[] | null,
+  card: Card | null,
   getPolls: () => void,
   getCard: (idPoll: number) => void,
   createPoll: (body: CreatePoll) => void,

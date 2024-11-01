@@ -1,18 +1,23 @@
 import ky from "ky";
 import { create } from "zustand";
 import { PollStore, Poll, Card } from './PollStore.ts';
+import { persist } from "zustand/middleware";
 
-const urlPolls = 'http://localhost:3000/api/polls'
+const urlPolls = 'http://localhost:8080/api/polls'
 const api = ky.create({ prefixUrl: urlPolls })
 
-export const usePollStore = create<PollStore>()((set, get) => ({
-  polls: null,
+export const usePollStore = create<PollStore>()(persist((set, get) => ({
+  polls: [],
   completedPolls: null,
   card: null,
   getPolls: async () => {
     try {
-      const res = await api.get('/').json<Poll[]>();
-      set({ polls: res });
+      const res = await api.get('').json<Poll[]>();
+      console.log("store res", res);
+      const test = Object.values(res);
+      console.log("store test", test);
+      set({ polls: test });
+      console.log("store polls", get().polls)
     } catch (error) {
       console.log(error)
     }
@@ -20,7 +25,7 @@ export const usePollStore = create<PollStore>()((set, get) => ({
   },
   getCard: async (id) => {
     try {
-      const res = await api.get(`/${id}`).json<Card[]>();
+      const res = await api.get(`/${id}`).json<Card>();
       set({ card: res });
     } catch (error) {
       console.log(error)
@@ -46,10 +51,11 @@ export const usePollStore = create<PollStore>()((set, get) => ({
   removePoll: async (idPoll) => {
     try {
       await api.delete(`/${idPoll}`)
+      set({ polls: get().polls!.filter(p => p.idPoll !== idPoll) })
     } catch (error) {
       console.log(error)
     }
-  },
-
-
+  }
+}), {
+  name: "poll-store",
 }))
