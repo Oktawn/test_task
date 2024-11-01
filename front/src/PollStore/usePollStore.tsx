@@ -8,16 +8,12 @@ const api = ky.create({ prefixUrl: urlPolls })
 
 export const usePollStore = create<PollStore>()(persist((set, get) => ({
   polls: [],
-  completedPolls: null,
+  completedPolls: [],
   card: null,
   getPolls: async () => {
     try {
-      const res = await api.get('').json<Poll[]>();
-      console.log("store res", res);
-      const test = Object.values(res);
-      console.log("store test", test);
-      set({ polls: test });
-      console.log("store polls", get().polls)
+      const res = await api.get('').json<Poll[] | any>();
+      set({ polls: res.polls });
     } catch (error) {
       console.log(error)
     }
@@ -34,7 +30,7 @@ export const usePollStore = create<PollStore>()(persist((set, get) => ({
   voteAnswer: async (idPoll, idAnswer) => {
     try {
       await api.post(`/${idPoll}/vote?idAnswer=${idAnswer}`);
-      set({ completedPolls: [...get().completedPolls!, { idPoll, idAnswer }] })
+      set({ completedPolls: [...get().completedPolls!, { id: idPoll, idAnswer }] })
     }
     catch (error) {
       console.log(error)
@@ -43,7 +39,7 @@ export const usePollStore = create<PollStore>()(persist((set, get) => ({
   createPoll: async (bodyPoll) => {
     try {
       await api.post('/', { json: bodyPoll });
-      set({ polls: [...get().polls!, { idPoll: get().polls!.length, title: bodyPoll.title }] })
+      set({ polls: [...get().polls!, { id: get().polls!.length, title: bodyPoll.title }] })
     } catch (error) {
       console.log(error)
     }
@@ -51,7 +47,7 @@ export const usePollStore = create<PollStore>()(persist((set, get) => ({
   removePoll: async (idPoll) => {
     try {
       await api.delete(`/${idPoll}`)
-      set({ polls: get().polls!.filter(p => p.idPoll !== idPoll) })
+      set({ polls: get().polls!.filter(p => p.id !== idPoll) })
     } catch (error) {
       console.log(error)
     }

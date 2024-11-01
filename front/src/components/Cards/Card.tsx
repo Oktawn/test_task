@@ -1,12 +1,10 @@
-
 import { Poll } from "../../PollStore/PollStore"
 
-
-function Card({ title }: Poll) {
+function Card(poll: Poll) {
   return (
-    <div className="card">
-      <h2>{title}</h2>
-    </div>
+    <button >
+      {poll.title}
+    </button>
   )
 }
 

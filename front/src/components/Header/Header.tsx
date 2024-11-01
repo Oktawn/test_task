@@ -1,9 +1,12 @@
+import { memo } from "react";
 
-export default function Header() {
 
+const Header = memo(() => {
   return (
     <header className="header">
       <h1>Сайт с интерактивными опросами</h1>
     </header>
   )
-}
+})
+
+export default Header;

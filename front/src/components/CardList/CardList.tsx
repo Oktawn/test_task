@@ -12,20 +12,15 @@ function CardList() {
     }
   }, [polls, getPolls]);
 
-  console.log("polls", polls)
 
   return (
     <div className="card-list">
       {
-        polls && polls.length > 0 ? (
-          polls.map((p) => (
-            <div key={p.idPoll}>
-              <Card title={p.title} idPoll={p.idPoll} />
-            </div>
-          ))
-        ) : (
-          <p>No polls available</p>
-        )
+        polls.map((p) => (
+          <div key={p.id}>
+            <Card title={p.title} id={p.id} />
+          </div>
+        ))
       }
     </div>
   );

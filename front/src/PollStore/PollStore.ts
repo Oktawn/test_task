@@ -1,5 +1,5 @@
 interface Poll {
-  idPoll: number,
+  id: number,
   title: string
 }
 
@@ -9,7 +9,7 @@ interface CreatePoll {
 }
 
 interface compPolls {
-  idPoll: number,
+  id: number,
   idAnswer: number
 }
 
@@ -26,7 +26,7 @@ interface Card {
 
 interface PollStore {
   polls: Poll[] | [],
-  completedPolls: compPolls[] | null,
+  completedPolls: compPolls[] | [],
   card: Card | null,
   getPolls: () => void,
   getCard: (idPoll: number) => void,
