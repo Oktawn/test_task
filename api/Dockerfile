@@ -6,5 +6,4 @@ COPY . .
 
 RUN npm ci
 
-
-CMD [ "npm", "run", "start" ]
+CMD ["sh", "-c", "npx knex migrate:latest && npx knex seed:run && npm run start"]
