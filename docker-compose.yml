@@ -10,6 +10,8 @@ services:
       POSTGRES_DB: ${DB_NAME}
     ports:
       - "${DB_EXTERN}:${DB_PORT}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   api:
     container_name: poll-api
@@ -22,9 +24,16 @@ services:
     ports:
       - "${API_PORT}:${API_PORT}"
 
-  # front:
-  #   container_name: poll-front
-  #   build:
-  #     context: ./front/
-  #   ports:
-  #     - "5173:5173"
+  front:
+    container_name: poll-front
+    build:
+      context: ./front/
+    ports:
+      - "5173:5173"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
