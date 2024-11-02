@@ -5,7 +5,7 @@ interface Poll {
 
 interface CreatePoll {
   title: string,
-  answers: string[]
+  answer: string[]
 }
 
 interface compPolls {
@@ -19,7 +19,7 @@ interface Answer {
   ans_count: number
 }
 
-interface Card {
+interface Survey {
   poll: Poll,
   ans: Answer[]
 }
@@ -27,12 +27,12 @@ interface Card {
 interface PollStore {
   polls: Poll[] | [],
   completedPolls: compPolls[] | [],
-  card: Card | null,
+  survey: Survey | undefined,
   getPolls: () => void,
-  getCard: (idPoll: number) => void,
+  getSurvey: (idPoll: number, callback?: (survey: Survey) => void) => void,
   createPoll: (body: CreatePoll) => void,
   voteAnswer: (idPoll: number, idAnswer: number) => void,
-  removePoll: (idPoll: number) => void,
+  removePoll: (title: string) => void,
 }
 
 
@@ -40,5 +40,5 @@ export type {
   PollStore,
   Poll,
   CreatePoll,
-  Card
+  Survey
 }

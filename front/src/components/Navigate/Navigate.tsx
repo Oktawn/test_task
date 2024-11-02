@@ -1,22 +1,37 @@
-import { memo } from "react";
 import { usePollStore } from "../../PollStore/usePollStore";
+import { useModal } from "../Modals/ModalContext";
 
 
-const Navigate = memo(() => {
+const Navigate = () => {
 
   const updatePolls = usePollStore((state) => state.getPolls);
+  const { showModal } = useModal();
 
-  const toggleUpdatePolls = () => {
-    updatePolls();
-  }
+  const handleCreatePoll = () => {
+    showModal({
+      active: true,
+      mode: 'create',
+      onClose: () => { },
+    });
+  };
+
+  const handleDeletePoll = () => {
+    showModal({
+      active: true,
+      mode: 'delete',
+      onClose: () => { },
+    });
+  };
+
 
   return (
-    <div >
-      <button onClick={toggleUpdatePolls}>Обновить список</button>
-      <button>Создать опрос</button>
-      <button>Удалить опрос</button>
+    <div className="navigate">
+      <button onClick={() => updatePolls()}>Обновить список</button>
+      <button onClick={handleCreatePoll}>Создать опрос</button>
+      <button onClick={handleDeletePoll}>Удалить опрос</button>
     </div>
+
   )
-})
+}
 
 export default Navigate;
